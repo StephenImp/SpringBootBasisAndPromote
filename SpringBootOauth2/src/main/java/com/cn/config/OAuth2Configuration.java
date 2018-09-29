@@ -1,8 +1,8 @@
 package com.cn.config;
 
-import com.cn.myself.oauth.Authorities;
-import com.cn.myself.oauth.CustomAuthenticationEntryPoint;
-import com.cn.myself.oauth.CustomLogoutSuccessHandler;
+import com.cn.oauth.Authorities;
+import com.cn.oauth.CustomAuthenticationEntryPoint;
+import com.cn.oauth.CustomLogoutSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.bind.RelaxedPropertyResolver;

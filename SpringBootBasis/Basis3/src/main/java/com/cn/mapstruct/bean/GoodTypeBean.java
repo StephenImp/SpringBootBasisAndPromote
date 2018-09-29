@@ -1,6 +1,5 @@
 package com.cn.mapstruct.bean;
 
-import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +9,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "good_types")
-@Data
 public class GoodTypeBean
 {
     @Id

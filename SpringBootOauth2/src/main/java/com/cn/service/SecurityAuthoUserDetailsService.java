@@ -1,9 +1,9 @@
 package com.cn.service;
 
-import com.cn.myself.entity.Authority;
-import com.cn.myself.entity.User;
-import com.cn.myself.jpa.UserJPA;
-import com.cn.myself.oauth.NewUserNotFoundException;
+import com.cn.entity.Authority;
+import com.cn.entity.User;
+import com.cn.jpa.UserJPA;
+import com.cn.oauth.NewUserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
