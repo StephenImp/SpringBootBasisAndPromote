@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapper namespace="com.cn.entity.TUser">
+
+	<select id="selectByPrimaryKey" parameterType="int" resultType="com.cn.entity.TUser">
+		select * from XueSheng where id=#{id}
+	</select>
+	
+	<select id="selectAll" resultType="com.cn.entity.TUser">
+		select * from XueSheng
+	</select>
+
+</mapper>

@@ -1,0 +1,47 @@
+①
+这个在SpringBoot中启动类中配置一下就可以了，不用他妈这么麻烦
+
+
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        servletContext.addServlet("customServlet",new CustomServlet()).addMapping("/zzrdemo");
+        servletContext.addFilter("customFilter",new CustomFilter()).addMappingForServletNames(EnumSet.of(DispatcherType.REQUEST),true,"customServlet");
+        servletContext.addListener(new CustomListener());
+    }
+
+************************************************************************************************************************
+Shared libraries（共享库） / runtimes pluggability（运行时插件能力）
+
+1、Servlet容器启动会扫描，当前应用里面每一个jar包的
+	ServletContainerInitializer的实现
+2、提供ServletContainerInitializer的实现类；
+	必须绑定在，META-INF/services/javax.servlet.ServletContainerInitializer
+	文件的内容就是ServletContainerInitializer实现类的全类名；
+
+总结：容器在启动应用的时候，会扫描当前应用每一个jar包里面
+META-INF/services/javax.servlet.ServletContainerInitializer
+指定的实现类，启动并运行这个实现类的方法；传入感兴趣的类型；
+
+
+ServletContainerInitializer；
+@HandlesTypes；
+
+
+效果没出来，视频里面是web工程，tomcat7.0启动，
+
+大概的意思就是  实现  ServletContainerInitializer  接口，也能得到 ServletContext的三大组件，暂时不知道有什么卵用...
+
+实现步骤如上面的 1  2
+
+
+知道了，这个的意思就是不用配置文件，只用注解，就把这些组件加载到容器里面去，真他妈傻逼
+
+************************************************************************************************************************
+②
+servlet  的异步请求方式  HelloAsyncServlet
+
+************************************************************************************************************************
+③
+SpringMVC的异步请求方式  AsyncController
+
+例子上面是web工程，tomcat启动，IDEA我不会，例子是这么个例子，先这样吧，伤心，懒的搞。

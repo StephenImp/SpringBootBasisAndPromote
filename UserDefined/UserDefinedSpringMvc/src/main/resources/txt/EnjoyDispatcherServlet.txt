@@ -1,0 +1,281 @@
+核心类
+
+
+public class EnjoyDispatcherServlet extends HttpServlet {
+
+    List<String> classNames = new ArrayList<>();
+
+    Map<String, Object> beans = new HashMap<>();
+
+    Map<String, Object> handleMap = new HashMap<>();
+
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        //扫描所有的bean---扫描所有的class文件。
+        scanPackage("com.cn.demoLearn");//写到preperties
+
+        doInstance();//将通过controller和service标注的实体类全部通过反射获取实例。
+
+        doIoc();// 给controller类中的属性赋值。
+
+        bulidUrlMapping();//  获取请求地址    demo/query
+
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        this.doPost(req, resp);
+    }
+
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        //获取请求路径
+        String uri = req.getRequestURI();//eg :/demo/query
+        String context = req.getContextPath(); //context--->""
+        String path = uri.replace(context, "");// path:  /demo/query
+
+        Method method = (Method) handleMap.get(path);
+
+        //根据之前在容器中存的key(这里的key是controller的请求路径)
+        Object object = beans.get("/" + path.split("/")[1]);
+        DemoController instance = (DemoController) object;
+
+        Object [] args = hand(req, resp, method);//获取请求参数
+        try {
+            method.invoke(instance,args);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * //扫描所有的bean---扫描所有的class文件。
+     *
+     * @param basePackage 类的包名
+     */
+    private void scanPackage(String basePackage) {
+        //basePackage.replaceAll("\\.", "/") --->  com/cn/demoLearn
+        //拿到实际class文件的物理路径（把 “.” 换成 “/”）
+        //file:/D:/SpringBootBasisAndPromote/SpringUserDefined/out/artifacts/SpringUserDefined_Web_exploded/WEB-INF/classes/com/cn/demoLearn/
+        URL url = this.getClass().getClassLoader().getResource("/" + basePackage.replaceAll("\\.", "/"));
+
+        ///D:/SpringBootBasisAndPromote/SpringUserDefined/out/artifacts/SpringUserDefined_Web_exploded/WEB-INF/classes/com/cn/demoLearn/
+        String fileStr = url.getFile();
+
+        //使用File类打开一个文件，如果当前文件不存在则创建新文件
+        File file = new File(fileStr);
+
+        //获取所有文件的路径(com.cn下的所有文件夹)
+        String[] fileStrs = file.list();
+
+        /**
+         * 找出所有的class文件
+         */
+        for (String path : fileStrs) {
+
+            File filePath = new File(fileStr + path);
+
+            /**
+             * 判断是否为文件夹,如果是文件夹就继续找
+             */
+            if (filePath.isDirectory()) {
+                scanPackage(basePackage + "." + path);
+            } else {
+                //加入List(Map)也可以。
+                classNames.add(basePackage + "." + filePath.getName());//路劲+class类名  eg:EnjoyAutowired.class
+            }
+        }
+    }
+
+    /**
+     * 根据扫描出来的类，进行实例化
+     */
+    private void doInstance() {
+        if (classNames.size() <= 0) {
+            System.out.println("包扫描失败。。。");
+            return;
+        }
+
+        //list的所有class类，
+        for (String className : classNames) {
+            String cn = className.replace(".class", "");
+
+            /**
+             * 为每个class文件创建类的实例，并存入map中。
+             */
+            try {
+                Class<?> clazz = Class.forName(cn);
+
+                try {
+                    //如果指定类型的注解存在于此类上,返回true,否则返回false
+                    if (clazz.isAnnotationPresent(EnjoyController.class)) {
+                        Object instance = clazz.newInstance();//创建控制类。
+                        //获得该类上指定的注解
+                        EnjoyRequestMaping requestMaping = clazz.getAnnotation(EnjoyRequestMaping.class);
+                        String rmvalue = requestMaping.value();//拿到请求路径
+                        beans.put(rmvalue, instance);
+                    } else if (clazz.isAnnotationPresent(EnjoyService.class)) {
+                        EnjoyService enjoyService = clazz.getAnnotation(EnjoyService.class);
+                        Object instance = clazz.newInstance();
+                        beans.put(enjoyService.value(), instance);
+                    } else {
+                        continue;
+                    }
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 给controller类中的属性赋值。
+     */
+    private void doIoc() {
+        if (beans.entrySet().size() <= 0) {
+            System.out.println("没有一个实例化的类。。。");
+        }
+
+        /**
+         * 遍历map中的所有的实例化的类
+         */
+        for (Map.Entry<String, Object> entry : beans.entrySet()) {
+            Object instance = entry.getValue();
+            Class<?> clazz = instance.getClass();
+
+            //获取每个实例化类的属性
+            Field[] fileds = clazz.getDeclaredFields();
+
+            /**
+             * 判断哪些变量用到了注解
+             */
+            if (clazz.isAnnotationPresent(EnjoyController.class)) {
+                Field[] fields = clazz.getDeclaredFields();
+                for (Field field : fields) {
+                    if (field.isAnnotationPresent(EnjoyAutowired.class)) {
+
+                        //如果是EnjoyAutowired注解。
+                        EnjoyAutowired auto = field.getAnnotation(EnjoyAutowired.class);
+
+                        //根据EnjoyAutowired中的名字
+                        String key = auto.value();//eg:demoServiceImpl
+                        field.setAccessible(true);//因为属性是私有的，所以要设置权限。
+                        try {
+                            /**
+                             * 根据EnjoyAutowired中的名字，把ioc中的实例与名字注入到属性中。
+                             */
+                            field.set(instance, beans.get(key));
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        continue;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 获取请求地址
+     */
+    private void bulidUrlMapping() {
+        if (beans.entrySet().size() <= 0) {
+            System.out.println("没有类进行实例化。。。");
+            return;
+        }
+
+        for (Map.Entry<String, Object> entry : beans.entrySet()) {
+            Object instance = entry.getValue();
+            Class<?> clazz = instance.getClass();
+            if (clazz.isAnnotationPresent(EnjoyController.class)) {
+                EnjoyRequestMaping requestMaping = clazz.getAnnotation(EnjoyRequestMaping.class);
+                String classPath = requestMaping.value();//  demo
+
+                Method[] methods = clazz.getMethods();
+                for (Method method : methods) {
+                    if (method.isAnnotationPresent(EnjoyRequestMaping.class)) {
+                        EnjoyRequestMaping methodMaping = method.getAnnotation(EnjoyRequestMaping.class);
+                        String methodPath = methodMaping.value();//  test
+                        handleMap.put(classPath + methodPath, method);
+                    } else {
+                        continue;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 获取方法的请求参数
+     * spring的底层是用策略模式写的。
+     */
+    private static Object[] hand(HttpServletRequest request, HttpServletResponse response, Method method) {
+
+        //拿到当前执行的方法的参数类型
+        Class<?>[] parameterTypes = method.getParameterTypes();
+
+        //根据参数的个数，new一个参数的数组，将方法里的所有参数赋值到args来
+        Object[] args = new Object[parameterTypes.length];
+
+        int args_i = 0;
+        int index = 0;
+
+        for (Class<?> paramClazz : parameterTypes) {
+
+            //自身类.class.isAssignableFrom(自身类或子类.class)  返回true
+            if (ServletRequest.class.isAssignableFrom(paramClazz)) {
+                args[args_i++] = request;
+            }
+
+            if (ServletResponse.class.isAssignableFrom(paramClazz)) {
+                args[args_i++] = response;
+            }
+
+            //从0-3判断没有RequestParam注解，很明显paramClazz为0和1时，不是，
+            //当为2和3时为@RequestParam，需要解析
+            //[@com.cn.annotation.EnjoinRequestParam(value = name)]
+            // method.getParameterAnnotations()[index] 用法见下面的注释
+            Annotation[] paramAns = method.getParameterAnnotations()[index];
+
+            if (paramAns.length > 0) {
+                for (Annotation paramAn : paramAns) {
+                    if (EnjoyRequestParam.class.isAssignableFrom(paramAn.getClass())) {
+                        EnjoyRequestParam rp = (EnjoyRequestParam) paramAn;
+                        //找到注解中的name和age
+                        args[args_i++] = request.getParameter(rp.value());
+                    }
+                }
+            }
+            index++;
+        }
+        return args;
+    }
+
+    /**
+     * Annotation[][] annos = method.getParameterAnnotations();
+       得到的结果是一个二维数组.
+       那么这个二维数组是怎么排列组合的呢?
+       首先举个例子:
+       @RedisScan
+       public void save(@RedisSave()int id,@RedisSave()String name){
+       }
+       第一个参数下表为0,第二个为1
+       也就是说:
+       annos[0][0] = RedisSave
+       annos[1][0] = RedisSave
+       也就是说,二维数组是包含多个仅有一个值的数组.
+     */
+
+}

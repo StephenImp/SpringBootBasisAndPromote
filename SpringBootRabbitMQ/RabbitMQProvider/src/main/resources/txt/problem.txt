@@ -1,0 +1,27 @@
+遇到的几个坑
+1.配置文件的端口号问题
+#端口号
+spring.rabbitmq.port=5672
+而在浏览器中登录是
+http://192.168.255.129:15672
+
+https://blog.csdn.net/super_rd/article/details/70241007?utm_source=itdadao&utm_medium=referral
+
+
+
+启动rabbitMQ的命令:
+关闭防火墙：service iptables stop
+./rabbitmq-server -detached
+
+2.boot的版本问题,2.02有问题
+                 1.52正常
+
+3.rabbit默认的虚拟主机地址:spring.rabbitmq.virtual-host=/
+
+4.在http://192.168.255.129:15672上要配置相应的QUEUE
+
+5.在http://192.168.255.129:15672上要配置相应的Exchange
+
+6.rabbitmqctl set_permissions -p "/" superrd ".*" ".*" ".*"  设置权限(应该是给虚拟空间地址设置权限)
+
+7.对应的exchange要和对应的quence绑定

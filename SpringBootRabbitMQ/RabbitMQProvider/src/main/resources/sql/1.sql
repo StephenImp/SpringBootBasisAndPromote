@@ -1,0 +1,7 @@
+CREATE TABLE `user_info` (
+  `UI_ID` int(11) DEFAULT NULL COMMENT '用户编号',
+  `UI_USER_NAME` varchar(20) DEFAULT NULL COMMENT '用户名称',
+  `UI_NAME` varchar(20) DEFAULT NULL COMMENT '真实姓名',
+  `UI_AGE` int(11) DEFAULT NULL COMMENT '用户年龄',
+  `UI_BALANCE` decimal(10,0) DEFAULT NULL COMMENT '用户余额'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户基本信息表';

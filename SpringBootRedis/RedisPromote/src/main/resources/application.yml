@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: redis
+  jpa:
+    database: mysql
+    show-sql: true
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.0.203:3306/test?characterEncoding=utf8
+    username: root
+    password: sz73go
+
+  # 配置Redis的连接密码
+  redis:
+    host: 192.168.0.176
+    password: sz73go
+    database: 1
+    port: 7393
