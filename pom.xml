@@ -6,7 +6,11 @@
 	<groupId>com.cn</groupId>
 	<artifactId>springboot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+    <modules>
+        <module>UserDefinedSpring</module>
+		<module>UserDefinedMyBatis</module>
+	</modules>
+    <packaging>pom</packaging>
 
 	<name>springboot</name>
 	<description>Demo project for Spring Boot</description>
