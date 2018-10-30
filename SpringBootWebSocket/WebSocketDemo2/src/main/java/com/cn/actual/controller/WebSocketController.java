@@ -1,24 +1,15 @@
 package com.cn.actual.controller;
 
-import com.cn.actual.config.ApiFactory;
 import com.cn.actual.config.WebSocket;
-import com.cn.actual.entity.TokenModel;
 import com.cn.actual.entity.WebsocketMessage;
-import com.cn.actual.service.TokenManagerService;
 import com.cn.actual.utils.JsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
-import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 @Controller
@@ -26,8 +17,8 @@ public class WebSocketController {
 
     private static final Logger logger = LoggerFactory.getLogger(WebSocketController.class);
 
-    @RequestMapping(value = "/welcome",method = RequestMethod.POST)
-    public String testWebScoket(@RequestBody String message) {
+    @RequestMapping(value = "/welcome",method = RequestMethod.GET)
+    public String testWebScoket(String message) {
         try {
             sendWebScoket(message);
         } catch (Exception e) {

@@ -1,0 +1,27 @@
+server:
+  port: 12320
+
+management:
+  security:
+    enabled: false
+
+spring:
+  redis:
+    database: 0
+    host: 47.99.114.23
+    password: 7c4a8d09ik0g4
+    port: 6379
+    timeout: 0
+
+kafka:
+  broker:
+    address: 47.99.114.23:9092
+  zookeeper:
+    connect: 47.99.114.23:2181
+  topic: mozi-kafka
+  messageKey: tramy.key
+  partition: 0
+  group: client-group
+
+
+
