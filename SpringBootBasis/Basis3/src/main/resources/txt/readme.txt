@@ -136,7 +136,7 @@ jar包
             <!--自定义starter依赖-->
             <dependency>
                 <groupId>com.cn</groupId>
-                <artifactId>springbootdemo3</artifactId>
+                <artifactId>springboot</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
 
@@ -151,6 +151,8 @@ jar包
     Springbootdemo3Application中添加注解 @EnableAutoConfiguration
     在src/main/resource目录下创建META-INF目录，并在目录内添加文件spring.factories
     application.properties
+
+    通过记载spring.factories，加载特定的配置文件
 
 5.SpringBoot使用MapStruct自动映射DTO
 

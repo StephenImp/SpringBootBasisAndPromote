@@ -2,7 +2,7 @@ package com.cn.eventandlistener.listener.order;
 
 import com.cn.eventandlistener.bean.UserBean;
 import com.cn.eventandlistener.event.UserRegisterEvent;
-import com.cn.eventandlistener.service.UserService;
+import com.cn.eventandlistener.service.UserEventListenerService;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.event.SmartApplicationListener;
 import org.springframework.scheduling.annotation.Async;
@@ -31,7 +31,7 @@ public class UserRegisterSendMailListener implements SmartApplicationListener
     @Override
     public boolean supportsSourceType(Class<?> aClass) {
         //只有在UserService内发布的UserRegisterEvent事件时才会执行下面逻辑
-        return aClass == UserService.class;
+        return aClass == UserEventListenerService.class;
     }
 
     /**

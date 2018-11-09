@@ -6,7 +6,6 @@ import com.cn.mapstruct.dto.GoodInfoDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-import org.mapstruct.factory.Mappers;
 
 /**
  * Mapper这个定义一般是被广泛应用到MyBatis半自动化ORM框架上，而这里的Mapper跟Mybatis没有关系。
@@ -58,6 +57,7 @@ public interface GoodInfoMapper {
      * <p>
      * 如果model定义了在实体没有可以映射的属性时，就可以使用@Mapping(target = "模型属性", ignore = true)来跳过不需要映射的模型属性了。
      */
+    //两个实体类合并成一个实体类，type和info 是入参变量，target对应着GoodInfoDTO的属性名
     @Mappings({
             @Mapping(source = "type.name", target = "typeName"),
             @Mapping(source = "info.id", target = "goodId"),

@@ -2,8 +2,6 @@ package com.cn.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 public class TestSecurityController {
@@ -20,7 +18,7 @@ public class TestSecurityController {
         return "index";
     }
 
-    @RequestMapping("/hello")
+    @RequestMapping("/helloSecurity")
     public String hello() {
         return "hello";
     }

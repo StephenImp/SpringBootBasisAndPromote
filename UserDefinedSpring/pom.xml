@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>userDefined</artifactId>
+    <artifactId>userDefined-Spring</artifactId>
 
     <name>userDefined</name>
     <!-- FIXME change it to the project's website -->

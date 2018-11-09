@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * 我们发布事件前需要注入ApplicationContext对象调用publishEvent方法完成事件发布。
  */
 @Service
-public class UserService
+public class UserEventListenerService
 {
     @Autowired
     ApplicationContext applicationContext;

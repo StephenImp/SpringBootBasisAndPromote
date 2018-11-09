@@ -1,5 +1,5 @@
 server:
-  port: 12320
+  port: 11111
 
 management:
   security:
@@ -22,6 +22,19 @@ kafka:
   messageKey: tramy.key
   partition: 0
   group: client-group
+
+#mq配置
+com:
+  mqtt:
+    host: tcp://127.0.0.1:1883
+    clientId: myself_mqtt_demo
+    userName: wpw
+    passWord: 123456
+    subscribeTopic: s2c/+
+    publishTopic: c2s/100120201100001C
+    timeout: 10
+    keepAlive: 90
+    maxInfLight: 1000000
 
 
 
