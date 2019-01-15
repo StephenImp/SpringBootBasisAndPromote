@@ -1,13 +1,12 @@
 package com.cn;
 
-import java.util.List;
-import java.util.ResourceBundle;
-
 import com.alibaba.fastjson.JSON;
-
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class RedisClient {
 
@@ -15,15 +14,17 @@ public class RedisClient {
 
     static {
         // 读取相关的配置:redis.properties
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("redis");
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("application");
 
-        int maxActive = Integer.parseInt(resourceBundle.getString("redis.pool.maxActive"));
-        int maxIdle = Integer.parseInt(resourceBundle.getString("redis.pool.maxIdle"));
-        int maxWait = Integer.parseInt(resourceBundle.getString("redis.pool.maxWait"));
-
-        String ip = resourceBundle.getString("redis.ip");
-        int port = Integer.parseInt(resourceBundle.getString("redis.port"));
-        String password = resourceBundle.getString("redis.password");
+        //int maxActive = Integer.parseInt(resourceBundle.getString("redis.pool.maxActive"));
+        int maxActive = 100;
+        //int maxIdle = Integer.parseInt(resourceBundle.getString("redis.pool.maxIdle"));
+        int maxIdle = 5000;
+        //int maxWait = Integer.parseInt(resourceBundle.getString("redis.pool.maxWait"));
+        int maxWait = 10000;
+        String ip = "47.99.114.23";
+        int port = 6379;
+        String password = "7c4a8d09ik0g4";
 
 
         JedisPoolConfig config = new JedisPoolConfig();

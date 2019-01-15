@@ -2,13 +2,13 @@ spring:
   profiles:
     active: prod
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.0.203:3306/test
-    username: root
-    password: sz73go
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://rm-bp1o892eutomay3940o.mysql.rds.aliyuncs.com:3306/test?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+    username: mzdb
+    password: MOziDB2018
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
 
 

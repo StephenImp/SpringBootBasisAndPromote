@@ -31,6 +31,7 @@ public class HttpAspect {
         ServletRequestAttributes attributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
         HttpServletRequest request =  attributes.getRequest();
 
+        System.out.println("开始日志打印");
         //url
         logger.info("url = {}",request.getRequestURI());
 

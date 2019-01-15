@@ -25,6 +25,7 @@
 	</properties>
 
 	<dependencies>
+
 		<!--spring data jpa依赖添加-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
