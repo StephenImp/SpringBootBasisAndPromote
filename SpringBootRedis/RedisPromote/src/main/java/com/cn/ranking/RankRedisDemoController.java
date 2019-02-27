@@ -42,6 +42,7 @@ public class RankRedisDemoController {
         redisTemplate.opsForZSet().add("score","article:00002",0 );
         redisTemplate.opsForZSet().add("score","article:00003",0 );
         redisTemplate.opsForZSet().add("score","article:00004",0 );
+
         System.out.println("文章获取到的"+redisTemplate.opsForZSet().range("score", 0, -1)
                 .stream()
                 .sorted(Comparator.reverseOrder())

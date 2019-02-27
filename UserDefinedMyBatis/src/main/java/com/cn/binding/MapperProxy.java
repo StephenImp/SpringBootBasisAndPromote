@@ -13,10 +13,11 @@ public class MapperProxy implements InvocationHandler {
 
     private SqlSession session;
 
-    public MapperProxy(SqlSession session) {
-        this.session = session;
-    }
-
+    /**
+     * proxy:代表动态代理对象
+     * method：代表正在执行的方法
+     * args：代表调用目标方法时传入的实参
+     */
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
@@ -28,5 +29,9 @@ public class MapperProxy implements InvocationHandler {
         }else {
             return session.selectOne(method.getDeclaringClass().getName() + "." + method.getName(), args == null ? null : args[0]);
         }
+    }
+
+    public MapperProxy(SqlSession session) {
+        this.session = session;
     }
 }

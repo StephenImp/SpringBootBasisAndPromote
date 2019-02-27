@@ -4,11 +4,10 @@ import com.cn.entity.TUser;
 import com.cn.mapper.TUserMapper;
 import com.cn.session.SqlSession;
 import com.cn.session.SqlSessionFactory;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
-
-import org.junit.Test;
 
 
 /**
@@ -29,6 +28,10 @@ public class TestMyBatis {
         TUserMapper userMapper = session.getMapper(TUserMapper.class);
 
         //4.遵循jdbc规范，通过底层的4大对象的合作完成数据查询和数据转化
+        /**
+         * 这里执行动态代理类的Invoke()
+         * 根据返回类型就能判断出调用的是哪一个方法。
+         */
         TUser user = userMapper.selectByPrimaryKey(1);
 
         System.out.println(user);

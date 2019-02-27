@@ -8,7 +8,6 @@ import com.cn.executor.impl.DefaultExecutor;
 import com.cn.session.SqlSession;
 
 import java.lang.reflect.Proxy;
-import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -78,9 +77,15 @@ public class DefaultSqlSession implements SqlSession {
         MapperProxy proxy = new MapperProxy(this);
 
         /**
+         *
+         * 生成动态代理类
+         *
          * 参数1：类的加载器
          * 参数2：实现的哪个接口
          * 参数3：
+         *
+         *
+         * 这里是将代理对象与被代理对象绑定在一起
          */
         return (T) Proxy.newProxyInstance(type.getClassLoader(),new Class[]{type},proxy);
     }

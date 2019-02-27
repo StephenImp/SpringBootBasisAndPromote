@@ -29,16 +29,14 @@ public class RequestTimesAop {
     public void WebPointCut() {
     }
 
-
-
     /**
      * JoinPoint对象封装了SpringAop中切面方法的信息,
      * 在切面方法中添加JoinPoint参数,就可以获取到封装了该方法信息的JoinPoint对象.
      *
      * 注解中的times与方法入参中times相对应
      */
-    @Before("WebPointCut() && @annotation(times)")
-    public void ifovertimes(final JoinPoint joinPoint, RequestTimes times) {
+    @Before("WebPointCut() && @annotation(requestTimes)")
+    public void ifovertimes(final JoinPoint joinPoint, RequestTimes requestTimes) {
         try {
             //java.lang.Object[] getArgs()：获取连接点方法运行时的入参列表；
             //Signature getSignature() ：获取连接点的方法签名对象；
@@ -73,9 +71,9 @@ public class RequestTimesAop {
             long count = redisTemplate.opsForValue().increment(key, 1);
             //如果是第一次，则设置过期时间
             if (count == 1) {
-                redisTemplate.expire(key, times.time(), TimeUnit.MILLISECONDS);
+                redisTemplate.expire(key, requestTimes.time(), TimeUnit.MILLISECONDS);
             }
-            if (count > times.count()) {
+            if (count > requestTimes.count()) {
                 request.setAttribute("ifOverTimes", "true");
             } else {
                 request.setAttribute("ifOverTimes", "false");
