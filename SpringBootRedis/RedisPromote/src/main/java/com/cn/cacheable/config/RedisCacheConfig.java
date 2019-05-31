@@ -27,10 +27,10 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @EnableCaching
 public class RedisCacheConfig extends CachingConfigurerSupport {
 
-    private static final String HOST = "192.168.0.176";
-    private static final int PORT = 7393;
+    private static final String HOST = "116.62.174.104";
+    private static final int PORT = 6379;
     private static final int TIMEOUT = 30;
-    private static final String PASSWORD = "sz73go";
+    private static final String PASSWORD = "7c4a8d09ik0g4";
     private static final int DATABASE = 1;
 
     private RedisTemplate redisTemplate;
