@@ -12,7 +12,7 @@ spring:
   application:
     name: quartz-cluster-node-first
 server:
-  port: 10000
+  port: 9999
 #####################################################################################################
 # 打印日志
 logging:
@@ -23,3 +23,5 @@ logging:
     org.hibernate.type.descriptor.sql.BasicExtractor: TRACE
     com.springms: DEBUG
 #####################################################################################################
+
+

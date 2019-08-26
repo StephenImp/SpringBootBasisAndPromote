@@ -40,8 +40,8 @@ public class QuartzConfiguration {
         DruidDataSource db = new DruidDataSource();
         db.setDriverClassName("com.mysql.jdbc.Driver");
         db.setUsername("root");
-        db.setPassword("sz73go");
-        db.setUrl("jdbc:mysql://192.168.0.203:3306/test3?useUnicode=true&characterEncoding=UTF-8&useSSL=false");
+        db.setPassword("hollyipcc!qaZ");
+        db.setUrl("jdbc:mysql://47.105.226.190:3306/case?useUnicode=true&characterEncoding=utf-8&useSSL=false");
         return db;
     }
 
