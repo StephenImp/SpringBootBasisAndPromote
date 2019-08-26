@@ -26,9 +26,9 @@ public class EventController {
 
     @RequestMapping(path = {"/event/async"}, method = {RequestMethod.POST})
     @ResponseBody
-    public String eventAsync(){
+    public String eventAsync() {
 
-        try{
+        try {
             long start = System.currentTimeMillis();
 
             /**
@@ -38,16 +38,16 @@ public class EventController {
              */
 
             //模拟主业务1 ： 复制文件HEXO.zip到指定文件夹target中
-            long time1 = FileCopyUtil.copyFile(source, target);
-            System.out.println("业务1运行时间为： " + time1);
+//            long time1 = FileCopyUtil.copyFile(source, target);
+//            System.out.println("业务1运行时间为： " + time1);
 
             /**
              * 同步
              */
             //模拟非主业务: 这个业务可能不是那么很紧急要立刻实现的
-            System.out.println("非业务程序开始运行...");
-            long t = FileCopyUtil.copyFile(sourceGame, targetGame);
-            System.out.println("非业务程序运行结束，运行时间为：" + t);
+//            System.out.println("非业务程序开始运行...");
+//            long t = FileCopyUtil.copyFile(sourceGame, targetGame);
+//            System.out.println("非业务程序运行结束，运行时间为：" + t);
 
 
             /**
@@ -59,18 +59,20 @@ public class EventController {
             System.out.println("非主业务程序运行结束");
 
 
-
             //模拟主业务2 ： 复制文件HEXO.zip到指定文件夹target2中
-            long time2 = FileCopyUtil.copyFile(source, target);
-            System.out.println("业务2运行时间为： " + time2);
+            //long time2 = FileCopyUtil.copyFile(source, target);
+            //System.out.println("业务2运行时间为： " + time2);
 
             long end = System.currentTimeMillis();
             System.out.println("当前运行总时间为：" + (end - start));
 
-            return JSONUtil.getJSONString(0);
-        }catch (Exception e){
+            return null;
+            //return JSONUtil.getJSONString(0);
+        } catch (Exception e) {
             logger.error("eventAsync 异常:" + e.getMessage());
-            return JSONUtil.getJSONString(1, "failed");
+            //return JSONUtil.getJSONString(1, "failed");
         }
 
+        return null;
+    }
 }

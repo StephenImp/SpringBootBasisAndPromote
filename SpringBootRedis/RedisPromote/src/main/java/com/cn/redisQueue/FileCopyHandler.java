@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class FileCopyHandler  implements EventHandler{
 
-    private static final Logger logger = LoggerFactory.getLogger(CalculateHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(EventHandler.class);
 
     private static String source = "D:/SQL.zip";
     private static String target = "D:/copy/sql1.zip";
@@ -22,7 +22,7 @@ public class FileCopyHandler  implements EventHandler{
 
         long start1 = System.currentTimeMillis();
         //模拟从工作队列中取出的一个事件进行处理
-        FileCopyUtil.copyFile(source, target);
+        //FileCopyUtil.copyFile(source, target);
         long end1 = System.currentTimeMillis();
         System.out.println("非业务运行完成，运行时间为**：" + (end1 - start1));
     }

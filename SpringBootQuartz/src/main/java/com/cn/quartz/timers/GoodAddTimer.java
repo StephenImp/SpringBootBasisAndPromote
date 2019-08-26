@@ -8,8 +8,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import java.util.Date;
 
-public class GoodAddTimer
-        extends QuartzJobBean {
+public class GoodAddTimer extends QuartzJobBean {
     /**
      * logback
      */
