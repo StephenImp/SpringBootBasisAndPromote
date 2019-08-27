@@ -1,4 +1,4 @@
-package com.cn.quartz;
+package com.cn.quartz.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;

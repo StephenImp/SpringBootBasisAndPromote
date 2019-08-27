@@ -1,13 +1,12 @@
-package com.cn.quartz.service;
+package com.cn.quartz_2.service;
 
 
-import com.cn.quartz.entity.GoodInfoEntity;
-import com.cn.quartz.jpa.GoodInfoRepository;
-import com.cn.quartz.timers.GoodAddTimer;
-import com.cn.quartz.timers.GoodSecKillRemindTimer;
-import com.cn.quartz.timers.GoodStockCheckTimer;
+import com.cn.quartz_2.entity.GoodInfoEntity;
+import com.cn.quartz_2.jpa.GoodInfoRepository;
+import com.cn.quartz_2.timers.GoodAddTimer;
+import com.cn.quartz_2.timers.GoodSecKillRemindTimer;
+import com.cn.quartz_2.timers.GoodStockCheckTimer;
 import org.quartz.*;
-import org.quartz.impl.triggers.SimpleTriggerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.UUID;
-
 
 
 /**
@@ -51,33 +49,7 @@ public class GoodInfoService
         buildGoodStockTimer();
         //构建商品描述提醒定时任务
         buildGoodSecKillRemindTimer(good.getId());
-        //容灾测试
-        buildMisfireTestTimer();
-
         return good.getId();
-    }
-
-    /**
-     * 容灾测试
-     */
-    private void buildMisfireTestTimer() {
-
-        //设置开始时间为1分钟后
-        long startAtTime = System.currentTimeMillis() + 1000 * 60;
-        //任务名称
-        String jobName = UUID.randomUUID().toString();
-        //任务所属分组
-        String groupName = GoodAddTimer.class.getName();
-
-        /**
-         * 把这个设置好的trigger加到scheduler里面就行了吧，哎，先这样吧啊
-         */
-        SimpleTrigger trigger = (SimpleTrigger) TriggerBuilder.newTrigger()
-                .withIdentity(jobName, groupName)
-                //如果你没有调用 *startAt(..)*方法，那么当前时间（立刻激活）将被赋值。
-                .startAt(new Date(startAtTime))
-                .build();
-        ((SimpleTriggerImpl)trigger).setMisfireInstruction(SimpleTrigger.MISFIRE_INSTRUCTION_RESCHEDULE_NOW_WITH_EXISTING_REPEAT_COUNT);
     }
 
     /**
@@ -95,7 +67,7 @@ public class GoodInfoService
         //创建任务
         JobDetail jobDetail = JobBuilder.newJob(GoodAddTimer.class).withIdentity(jobName,groupName).build();
         //创建任务触发器
-        Trigger trigger = TriggerBuilder.newTrigger().withIdentity(jobName,groupName).startAt(new Date(startAtTime)).build();
+        org.quartz.Trigger trigger = TriggerBuilder.newTrigger().withIdentity(jobName,groupName).startAt(new Date(startAtTime)).build();
         //将触发器与任务绑定到调度器内
         scheduler.scheduleJob(jobDetail, trigger);
     }
@@ -115,7 +87,7 @@ public class GoodInfoService
         //创建任务
         JobDetail jobDetail = JobBuilder.newJob(GoodStockCheckTimer.class).withIdentity(jobName,groupName).build();
         //创建任务触发器
-        Trigger trigger = TriggerBuilder.newTrigger().withIdentity(jobName,groupName).withSchedule(scheduleBuilder).build();
+        org.quartz.Trigger trigger = TriggerBuilder.newTrigger().withIdentity(jobName,groupName).withSchedule(scheduleBuilder).build();
         //将触发器与任务绑定到调度器内
         scheduler.scheduleJob(jobDetail, trigger);
     }
