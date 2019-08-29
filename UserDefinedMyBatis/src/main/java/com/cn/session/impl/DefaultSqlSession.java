@@ -13,8 +13,6 @@ import java.util.List;
 /**
  * DefaultSqlSession提供给开发人员访问的API
  * Excutor去实现访问数据库的操作。
- *
- * 1.
  */
 public class DefaultSqlSession implements SqlSession {
 
