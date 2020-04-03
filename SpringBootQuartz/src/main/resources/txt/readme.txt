@@ -39,3 +39,17 @@ quartz中的ClusterManager能帮我们自动的管理mysql中的数据，做到�
 就已合力这个为例，数据导入过程中，宕机，那么，只能是，根据文件名，把之前的已经导入的数据，全部删除，重新导入。
 这里就要用到quartz中misfirm处理机制
 
+任务框架quartz的misfire的理解
+
+在trigger中可以设置各种策略，实现容灾。
+
+https://www.jianshu.com/p/634d2a6fae7b
+
+分布式定时任务的两种处理方式
+抢占式：谁先获得资源谁执行，这种模式无法将单个任务的数据交给其他节点协同处理，一般用于处理数据量较小、任务较多的场景。
+协同式：可以将单个任务处理的数据均分到多个JVM中处理，提高数据的并行处理能力。
+
+通过分布式锁互斥执行，详见https://blog.csdn.net/penguinhao/article/details/83515024
+
+demo
+https://blog.csdn.net/qq_24986595/article/details/89966520

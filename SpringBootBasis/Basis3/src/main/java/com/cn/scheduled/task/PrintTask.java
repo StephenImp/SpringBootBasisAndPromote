@@ -41,7 +41,7 @@ public class PrintTask {
     /**
      * 第一次被调用前的延时，单位毫秒
      */
-    //@Scheduled(initialDelay = 1000 * 10,fixedDelay = 1000 * 2)
+    @Scheduled(initialDelay = 1000 * 10,fixedDelay = 1000 * 2)
     public void initialDelay() throws Exception
     {
         System.out.println("执行测试initialDelay时间："+ new Date(System.currentTimeMillis()));
