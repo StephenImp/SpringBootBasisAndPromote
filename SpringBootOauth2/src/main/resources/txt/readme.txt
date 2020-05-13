@@ -41,7 +41,7 @@ get方法
 页面正常显示
 
 token失效后,刷新token
-http://localhost:8080/oauth/token&grant_type=refresh_token&refresh_token= a5797057-8547-4668-8b8f-934ad4759423
+http://localhost:8080/oauth/token?grant_type=refresh_token&refresh_token=c1407d5c-fe25-4398-a396-38fd43808ace
 get方法
 
 5.OAuth2主要作用是
@@ -56,3 +56,8 @@ OAuth2为我们提供了四种授权方式：
 2、简化模式（implicit）
 3、密码模式（resource owner password credentials）
 4、客户端模式（client credentials）
+
+
+https://blog.csdn.net/cauchy6317/article/details/85162225
+
+https://www.jianshu.com/p/ded9dc32f550
