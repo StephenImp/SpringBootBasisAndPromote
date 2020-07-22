@@ -11,3 +11,19 @@
 
 
 6.WebSocketController，在与页面进行连接的情况下，将发送的请求返回给前端.
+
+
+请求示例：
+
+模拟客户端①
+http://localhost:8080/welcome?message=demo1
+
+
+模拟客户端②
+http://localhost:8080/welcome?message=demo2
+
+
+当第二个客户端开启连接的时候，第一个客户端将收到消息
+
+客户端发送连接请求  http://localhost:8080/welcome?message=demo2
+把之前建立连接的websocket获取出来，给每个客户端发送消息

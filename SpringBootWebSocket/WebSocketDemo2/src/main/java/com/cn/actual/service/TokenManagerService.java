@@ -3,7 +3,6 @@ package com.cn.actual.service;
 import com.cn.actual.constant.Constants;
 import com.cn.actual.entity.TokenModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -63,8 +62,11 @@ public class TokenManagerService{
         if (token == null || token.length() == 0) {
             return null;
         }
-        BoundValueOperations<String, String> stringTemplate = redisTemplate.boundValueOps(token);
-        String userId = stringTemplate.get();
+
+        //BoundValueOperations<String, String> stringTemplate = redisTemplate.boundValueOps(token);
+        //String userId = stringTemplate.get();
+
+        String userId = UUID.randomUUID().toString();
 
         TokenModel tokenModel = new TokenModel(userId, token);
 

@@ -59,7 +59,6 @@ public class WebSocket {
         for (WebSocket item : webSocketSet) {
             try {
                 logger.error("客户端发送消：{}", message);
-
                 item.sendMessage(message);
             } catch (IOException e) {
                 logger.error("客户端发送消息异常：{}", e.getMessage());
