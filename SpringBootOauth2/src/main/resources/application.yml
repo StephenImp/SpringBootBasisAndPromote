@@ -25,6 +25,13 @@ spring:
     testOnReturn: false
     #配置监控统计拦截的filters，去掉后监控界面sql将无法统计,'wall'用于防火墙
     filters: stat, wall, log4j
+
+  redis:
+    host: 10.112.96.32
+    password: mtp@@123
+    port: 6379
+    database: 5
+    timeout: 20000
   jpa:
     properties:
       hibernate:

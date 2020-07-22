@@ -26,6 +26,9 @@ public class SecurityAuthoUserDetailsService implements UserDetailsService
     @Autowired
     private UserJPA userRepository;
 
+    /**
+     * 实现UserDetailsService中的loadUserByUsername方法，用于加载用户数据
+     */
     @Override
     @Transactional
     public UserDetails loadUserByUsername(final String login) {
@@ -37,12 +40,15 @@ public class SecurityAuthoUserDetailsService implements UserDetailsService
         if (userFromDatabase == null) {
             throw new NewUserNotFoundException("User " + lowercaseLogin + " was not found in the database");
         }
+
+        //用户权限列表
         //获取用户的所有权限并且SpringSecurity需要的集合
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         for (Authority authority : userFromDatabase.getAuthorities()) {
             GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(authority.getName());
             grantedAuthorities.add(grantedAuthority);
         }
+
         //返回一个SpringSecurity需要的用户对象
         return new org.springframework.security.core.userdetails.User(
                 userFromDatabase.getUsername(),
