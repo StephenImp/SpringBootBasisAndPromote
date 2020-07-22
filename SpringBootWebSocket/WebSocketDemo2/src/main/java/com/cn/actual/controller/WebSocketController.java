@@ -1,8 +1,9 @@
 package com.cn.actual.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cn.actual.config.WebSocket;
+
 import com.cn.actual.entity.WebsocketMessage;
-import com.cn.actual.utils.JsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -55,7 +56,7 @@ public class WebSocketController {
                 //logger.info("发送websocket消息的token：" + webSocket.getToken());
                 WebsocketMessage websocketMessage = new WebsocketMessage();
                 websocketMessage.setMessage(message);
-                WebSocket.sendInfo(webSocket, JsonUtil.toJson(websocketMessage));
+                WebSocket.sendInfo(webSocket, JSONObject.toJSONString(websocketMessage));
             }
 
         } catch (IOException e) {
